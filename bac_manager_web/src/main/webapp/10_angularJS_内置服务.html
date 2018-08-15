@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript">
+        //定义一个模块
+        var app = angular.module("bac", []);
+        //定义一个函数.
+        app.controller("brandController", function ($scope, $http) {
+            //定义函数
+            $scope.find = function () {
+                //向服务发送ajax请求
+                $http.get("data.json").success(function (data) {
+                    $scope.list = data;
+                })
+            }
+        })
+    </script>
+</head>
+<body ng-app="bac" ng-controller="brandController" ng-init="find();">
+<table border="1" style="width: 600px;height: 200px;">
+    <tr ng-repeat="entity in list">
+        <td>{{entity.name}}</td>
+        <td>{{entity.shuxue}}</td>
+        <td>{{entity.yuwen}}</td>
+    </tr>
+</table>
+
+
+</body>
+</html>
