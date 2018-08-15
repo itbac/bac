@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.bac.mapper.BrandMapper">
+    <!--封装sql片段,字段,字段起别名-->
+    <sql id="sql_column">
+       id,name,first_char firstChar
+   </sql>
+
+    <!--查询所有品牌数据-->
+    <select id="findAll" resultType="tbBrand">
+        SELECT <include refid="sql_column"></include> FROM tb_brand
+    </select>
+
+    <!--插入品牌数据-->
+    <insert id="insert" parameterType="tbBrand">
+        INSERT INTO tb_brand VALUES (#{id},#{name},#{firstChar})
+    </insert>
+
+    <!--根据id查询品牌数据,用于修改回显.-->
+    <select id="findOne" parameterType="long" resultType="tbBrand">
+        select <include refid="sql_column"></include> from tb_brand WHERE id=#{id};
+    </select>
+    <!--修改品牌-->
+    <update id="updateByPrimaryKey" parameterType="tbBrand">
+        UPDATE tb_brand SET name=#{name},first_char=#{firstChar} WHERE id=#{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="delete" parameterType="long">
+        DELETE FROM tb_brand WHERE id=#{id}
+    </delete>
+
+    <!--查询品牌下拉列表-->
+    <select id="findBrandList" resultType="map">
+        SELECT id,name text from tb_brand
+    </select>
+</mapper>
+
