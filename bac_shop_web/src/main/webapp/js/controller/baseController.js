@@ -16,9 +16,10 @@ app.controller("baseController", function ($scope) {
         }
     };
 
+    // 分页调用条件搜索  //findPage 改成 search
     //定义reloadList
     $scope.reloadList = function () {
-        $scope.findPage($scope.paginationConf.currentPage,
+        $scope.search($scope.paginationConf.currentPage,
             $scope.paginationConf.itemsPerPage);
     }; //传当前页currentPage,每页大小itemsPerPage
 

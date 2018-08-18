@@ -28,5 +28,10 @@ app.service('goodsService',function($http){
 	//搜索
 	this.search=function(pageNum,pageSize,searchEntity){
 		return $http.post('../goods/search/'+pageNum+"/"+pageSize, searchEntity);
-	}    	
+	}
+    //定义是否上架方法
+    this.isMarketable = function (status, ids) {
+        return $http.get('../goods/isMarketable/' + status + '/' + ids);
+    }
+
 });

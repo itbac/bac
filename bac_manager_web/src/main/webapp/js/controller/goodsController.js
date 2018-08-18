@@ -292,7 +292,7 @@ app.controller('goodsController', function ($scope,
     //定义数组存储分类名称
     $scope.itemCatList = [];
     //查询分类,把所有的分类都封装数组中进行存储
-    $scope.findCatAllList = function () {
+    $scope.findItemCatList = function () {
         //调用分类服务,查询所有名称
         itemCatService.findAll().success(function (data) {
             //遍历分类数据的集合
@@ -304,23 +304,22 @@ app.controller('goodsController', function ($scope,
 
         })
 
-    }
-
-    //商品上下架方法
-    $scope.isMarketable = function (status) {
+    };
+    //运营商系统审核商品  ,修改状态.
+    //0,未审核,1,审核通过,2,审核不通过,3关闭.
+    $scope.updateStatus = function (status) {
         //调用服务方法
-        goodsService.isMarketable(status,$scope.selectIds).success(function (data) {
-            //判断
-            if (data.success) {
-                //刷新
-                $scope.reloadList();
-                //清空复选框
-                $scope.selectIds=[];
+        goodsService.updateStatus($scope.selectIds,status).success(function (data) {
+
+            if (data.success) {  //审核成功
+                $scope.reloadList();  //刷新列表
+                $scope.selectIds = [];  //情空id 集合
             } else {
                 alert(data.message);
             }
+
         })
 
-    }
+    };
 
 });	

@@ -1,18 +1,19 @@
-package com.bac.shop.controller;
+package com.bac.manager.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.bac.manager.service.GoodsService;
+import java.util.List;
+
 import com.bac.pojo.TbGoods;
-import com.bac.utils.BacResult;
-import com.bac.utils.PageResult;
 import com.bac.vo.Goods;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.dubbo.config.annotation.Reference;
 
-import java.util.List;
+import com.bac.manager.service.GoodsService;
+
+import com.bac.utils.PageResult;
+import com.bac.utils.BacResult;
 
 /**
  * controller
@@ -117,28 +118,23 @@ public class GoodsController {
      * @param pageSize
      * @return
      */
-    @RequestMapping("/search/{pageNum}/{pageSize}")
-    public PageResult search(@RequestBody TbGoods goods, @PathVariable int pageNum, @PathVariable int pageSize) {
-        //获取商家id
-        String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
-        //添加查询条件
-        goods.setSellerId(sellerId);
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody TbGoods goods, int pageNum, int pageSize) {
         return goodsService.findPage(goods, pageNum, pageSize);
     }
 
     /*
-    设置上下架状态.
-     */
-    @RequestMapping("/isMarketable/{status}/{ids}")
-    public BacResult isMarketable(@PathVariable String status,@PathVariable Long[] ids) {
+   批量修改状态 ,运营商系统审核商品
+    */
+    @RequestMapping("/updateStatus/{ids}/{status}")
+    public BacResult updateStatus(@PathVariable Long[] ids, @PathVariable String status) {
         try {
-            goodsService.isMarketable(status, ids);
-            return new BacResult(true, "上下架成功");
+            goodsService.updateStatus(ids, status);
+            return new BacResult(true, "修改成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new BacResult(false, "上下架失败");
+            return new BacResult(false, "修改失败");
         }
     }
-
 
 }
