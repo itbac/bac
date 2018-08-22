@@ -32,7 +32,7 @@ public class UploadController {
             String substring = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
             //2.创建FastDFSClient 客户端对象,参数传入配置文件.
-            FastDFSClient fastDFSClient = new FastDFSClient("classpath:config/fdfs_client.conf");
+            FastDFSClient fastDFSClient = new FastDFSClient("classpath:conf/fdfs_client.conf");
             //3.执行上传,参数1:文件的字节数组, 参数二.文件后缀名.
             String url = fastDFSClient.uploadFile(file.getBytes(), substring);
 

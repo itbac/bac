@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 定义服务名称: 自定义,唯一标识一个服务,以便于进行服务治理 -->
+    <dubbo:application name="content-service"/>
+
+    <!-- 服务注册地址: multicast : 广播地址 zookeeper: zookeeper注册中心地址 -->
+    <dubbo:registry address="zookeeper://192.168.66.88:2181"/>
+
+    <!-- 对外暴露服务地址端口 地址:dubbo://ip:20880/接口/方法/.. -->
+    <dubbo:protocol name="dubbo" port="20881"/>
+
+    <!-- 把对象注册到zookeeper注册中心 : dubbox -->
+    <dubbo:annotation package="com.bac.content.service.impl"/>
+
+    <!-- dubbo注册方式1,注解方式-->
+
+
+    <!--&lt;!&ndash;   dubbo注册方式2,配置方式  &ndash;&gt;-->
+    <!--&lt;!&ndash;   声明需要暴露的服务接口   &ndash;&gt;-->
+    <!--<dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="demoService"/>-->
+    <!--&lt;!&ndash;和本地bean一样实现服务&ndash;&gt;-->
+    <!--<bean id="demoService" class="com.alibaba.dubbo.demo.provider.DemoServiceImpl"/>-->
+</beans>

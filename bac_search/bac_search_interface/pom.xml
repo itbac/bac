@@ -12,4 +12,12 @@
     <artifactId>bac_search_interface</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.itbac</groupId>
+            <artifactId>bac_pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 </project>

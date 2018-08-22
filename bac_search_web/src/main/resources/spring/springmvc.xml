@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
      <!-- 1,扫描资源文件 -->
     <context:property-placeholder location="classpath:config/application.properties" />
-	
+
 	<!-- 2,注解驱动  默认:Jackson-->
 	<mvc:annotation-driven>
 	  <!-- 指定使用fastJson进行json格式和pojo对象相互转换  -->
@@ -29,18 +29,14 @@
 	<!--放行静态资源  -->
 	<mvc:default-servlet-handler/>
 	
-	<!-- 上传文件解析器 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="defaultEncoding" value="UTF-8"></property>
-		<property name="maxUploadSize" value="102400000"></property>
-	</bean>
+
 
 	<!-- 引用dubbo 服务 -->
 	<!-- 定义表现层服务名称: 服务消费者名称 -->
-	<dubbo:application name="manager-web" />
+	<dubbo:application name="search-web" />
 	<!-- 指定服务消费地址  -->
 	<dubbo:registry address="zookeeper://192.168.66.88:2181"/>
 	<!-- 使用注解方法引入服务 -->
-	<dubbo:annotation package="com.bac.manager.controller" />
+	<dubbo:annotation package="com.bac.search.controller" />
 
 </beans>
