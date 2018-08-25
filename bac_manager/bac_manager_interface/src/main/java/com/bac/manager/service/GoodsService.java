@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bac.pojo.TbGoods;
 
+import com.bac.pojo.TbItem;
 import com.bac.utils.PageResult;
 import com.bac.vo.Goods;
 
@@ -71,10 +72,12 @@ public interface GoodsService {
     /*
     批量修改审核状态,
      */
-    public void updateStatus(Long[]ids,String status);
+    public void updateStatus(Long[] ids, String status);
 
     //定义是否上架方法
-    public void isMarketable(String status,Long[]ids);
+    public void isMarketable(String status, Long[] ids);
 
 
+    //需求:查询所有审核通过的sku商品
+    public List<TbItem> findItemList(Long[] ids);
 }

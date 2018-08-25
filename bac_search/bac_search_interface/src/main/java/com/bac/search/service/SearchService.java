@@ -1,5 +1,6 @@
 package com.bac.search.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SearchService {

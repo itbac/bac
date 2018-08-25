@@ -1,5 +1,6 @@
 package com.bac.manager.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.bac.mapper.*;
 import com.bac.pojo.*;
 import com.bac.vo.Goods;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
@@ -293,6 +295,30 @@ public class GoodsServiceImpl implements GoodsService {
             //更新
             goodsMapper.updateByPrimaryKey(tbGoods);
         }
+    }
+
+    //需求:查询所有审核通过的sku商品
+    public List<TbItem> findItemList(Long[] ids) {
+        //创建集合封装审核通过的集合商品
+        List<TbItem> itemList = new ArrayList<>();
+
+        //遍历查询商品
+        for (Long id : ids) {
+            //创建商品example
+            TbItemExample example=new TbItemExample();
+            //创建商品 criteria
+            TbItemExample.Criteria criteria = example.createCriteria();
+            //设置外键
+            criteria.andGoodsIdEqualTo(id);
+            //查询
+            List<TbItem> items = itemMapper.selectByExample(example);
+
+            //添加集合
+            itemList.addAll(items);
+
+        }
+
+        return itemList;
     }
 
 

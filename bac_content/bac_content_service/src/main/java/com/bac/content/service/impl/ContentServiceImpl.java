@@ -56,9 +56,9 @@ public class ContentServiceImpl implements ContentService {
      */
     @Override
     public void add(TbContent content) {
-        contentMapper.insert(content);
-        //新增广告后,清除缓存
+        //新增广告后,清除redis缓存
         redisTemplate.boundHashOps("INDEX_CHAE").delete(content.getCategoryId());
+        contentMapper.insert(content);
     }
 
 
@@ -68,10 +68,12 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void update(TbContent content) {
         //修改广告后清楚缓存.
-        //1.查询修改前的分类id
+        //1.查询修改前的分类id (因为还没修改数据库,数据库里还是之前的categoryId .)
         Long categoryId = contentMapper.selectByPrimaryKey(content.getId()).getCategoryId();
-        //2.根据categoryId删除缓存.
+        //2.根据修改之前的categoryId删除 缓存.
         redisTemplate.boundHashOps("INDEX_CHAE").delete(categoryId);
+        //3.根据修改之后的categoryId删除 缓存.
+        redisTemplate.boundHashOps("INDEX_CHAE").delete(content.getCategoryId());
 
         contentMapper.updateByPrimaryKey(content);
     }

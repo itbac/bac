@@ -2,8 +2,14 @@ package com.bac.manager.controller;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import com.bac.pojo.TbGoods;
+import com.bac.pojo.TbItem;
 import com.bac.vo.Goods;
+import org.apache.activemq.command.ActiveMQTopic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +20,10 @@ import com.bac.manager.service.GoodsService;
 
 import com.bac.utils.PageResult;
 import com.bac.utils.BacResult;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 
 /**
  * controller
@@ -26,6 +36,14 @@ public class GoodsController {
 
     @Reference
     private GoodsService goodsService;
+
+    //注入消息发送模板对象
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    //注入发送消息目的地
+    @Autowired
+    private ActiveMQTopic activeMQTopic;
 
     /**
      * 返回全部列表
@@ -103,6 +121,10 @@ public class GoodsController {
     public BacResult delete(@PathVariable Long[] ids) {
         try {
             goodsService.delete(ids);
+            //发送消息
+            jmsTemplate.convertAndSend("solr_index_delete",ids);
+
+
             return new BacResult(true, "删除成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,13 +145,37 @@ public class GoodsController {
         return goodsService.findPage(goods, pageNum, pageSize);
     }
 
+
     /*
    批量修改状态 ,运营商系统审核商品
+
+   用activeMQ消息中间件,同步索引库,静态页面.
+    1.审核商品通过后,使用cativeMQ发送消息
+    2.使用activeMQ发送消息
+    发送消息内容是什么?
+    把改变的商品内容发送给搜索服务.bac_search_service  com.bac.search.listener.IndexListener
     */
     @RequestMapping("/updateStatus/{ids}/{status}")
     public BacResult updateStatus(@PathVariable Long[] ids, @PathVariable String status) {
         try {
             goodsService.updateStatus(ids, status);
+
+            //activeMQ发送消息.
+            //1.判断状态是否是审核通过的
+            if ("1".equals(status)) {
+                //查询需要发送的商品信息
+                List<TbItem> itemList = goodsService.findItemList(ids);
+
+                //把集合转换json字符串
+                String itemJson = JSON.toJSONString(itemList);
+
+                jmsTemplate.send(activeMQTopic, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        return session.createTextMessage(itemJson);
+                    }
+                });
+            }
             return new BacResult(true, "修改成功");
         } catch (Exception e) {
             e.printStackTrace();
