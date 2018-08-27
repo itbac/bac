@@ -34,6 +34,7 @@
     </http>
 
     <!--3.配置认证管理器-->
+    <!--运营商管理系统,账户密码写死-->
     <authentication-manager>
         <authentication-provider>
             <user-service>

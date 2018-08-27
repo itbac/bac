@@ -23,6 +23,7 @@ import com.bac.utils.BacResult;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 /**
@@ -121,8 +122,16 @@ public class GoodsController {
     public BacResult delete(@PathVariable Long[] ids) {
         try {
             goodsService.delete(ids);
-            //发送消息
-            jmsTemplate.convertAndSend("solr_index_delete",ids);
+            //发送消息,如果发送对象,就要send方法,需要消息解析器
+            //jmsTemplate.convertAndSend("solr_index_delete",ids); 需要消息解析器.
+            jmsTemplate.send("solr_index_delete", new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    ObjectMessage Message = session.createObjectMessage(ids);
+
+                    return Message;
+                }
+            });
 
 
             return new BacResult(true, "删除成功");

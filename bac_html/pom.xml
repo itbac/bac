@@ -1,29 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>bac_parent</artifactId>
-        <groupId>com.itbac</groupId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../bac_parent/pom.xml</relativePath>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bac_html</artifactId>
-
-    <dependencies>
-        <!--页面静态化技术-->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
-    </dependencies>
-
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <parent> 
+    <artifactId>bac_parent</artifactId>  
+    <groupId>com.itbac</groupId>  
+    <version>1.0-SNAPSHOT</version>  
+    <relativePath>../bac_parent/pom.xml</relativePath> 
+  </parent>  
+  <modelVersion>4.0.0</modelVersion>  
+  <artifactId>bac_html</artifactId>  
+  <packaging>war</packaging>  
+  <dependencies> 
+    <!--页面静态化技术-->  
+    <dependency> 
+      <groupId>com.itbac</groupId>  
+      <artifactId>bac_common</artifactId>  
+      <version>1.0-SNAPSHOT</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>junit</groupId>  
+      <artifactId>junit</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>com.itbac</groupId>  
+      <artifactId>bac_dao</artifactId>  
+      <version>1.0-SNAPSHOT</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>slf4j-log4j12</artifactId>  
+      <version>1.7.7</version> 
+    </dependency>  
+    <!-- Spring -->  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-context</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-beans</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-webmvc</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-jdbc</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-aspects</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-jms</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-context-support</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-test</artifactId> 
+    </dependency> 
+  </dependencies> 
 </project>

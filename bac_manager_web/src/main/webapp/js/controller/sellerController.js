@@ -79,14 +79,14 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
 
 
     /*
-      更改商家状态: 默认未审核0,通过1,未通过2,关闭商家3
+     运营商管理 更改商家状态: 默认未审核0,通过1,未通过2,关闭商家3
       @param  sellerId
       @param  status
   */
 
     $scope.updateStatus = function (sellerId, status) {
         sellerService.updateStatus(sellerId, status).success(function (response) {
-            if (response.success()) {
+            if (response.success) {
                 //刷新列表
                 $scope.reloadList();
             } else {

@@ -312,7 +312,9 @@ app.controller('goodsController', function ($scope,
         goodsService.updateStatus($scope.selectIds,status).success(function (data) {
 
             if (data.success) {  //审核成功
+
                 $scope.reloadList();  //刷新列表
+
                 $scope.selectIds = [];  //情空id 集合
             } else {
                 alert(data.message);
