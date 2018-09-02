@@ -16,6 +16,13 @@
         <module>bac_user_interface</module>
         <module>bac_user_service</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.itbac</groupId>
+            <artifactId>bac_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

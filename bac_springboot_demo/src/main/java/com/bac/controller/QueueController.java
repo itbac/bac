@@ -29,23 +29,7 @@ public class QueueController {
         return "success";
     }
 
-    /*
-   需求:接收消息,不要有返回值,否则会发6次消息.
-        如果application.properties配置了外置activeMQ要先启动.
-     */
-    @JmsListener(destination = "queue")
-    public void receive(Message message) {
-        try {
-            TextMessage m = (TextMessage) message;
-            String text = m.getText();
-            System.out.println("接收到的消息:" + text);
 
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
     /*
   需求:发送消息,测试发送短信
@@ -53,9 +37,9 @@ public class QueueController {
     @RequestMapping("/send")
     public String send() {
         Map<String, String> smsMap = new HashMap<>();
-        smsMap.put("phone","13922213530");
-        smsMap.put("sign_name","黑马");
-        smsMap.put("template_code","SMS_125028677");
+        smsMap.put("phone","17776261820");
+        smsMap.put("sign_name","周怡斌");
+        smsMap.put("template_code","SMS_142381138");
         smsMap.put("code","888888");
         jmsTemplate.convertAndSend("sms", smsMap);
         return "success";

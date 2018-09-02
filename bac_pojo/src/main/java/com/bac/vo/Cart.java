@@ -15,6 +15,7 @@ public class Cart implements Serializable {
     //商家名称
     private String sellerName;
     //购物车明细
+    //一个商家可以购买多个商品
     private List<TbOrderItem> orderItems;
 
     private static final long serialVersionUID = 1L;

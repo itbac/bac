@@ -80,6 +80,9 @@
 		<table tableName="tb_goods"></table>
 		<table tableName="tb_goods_desc"></table>
 		<table tableName="tb_pay_log"></table>
+		<table tableName="tb_seckill_goods"></table>
+		<table tableName="tb_seckill_order"></table>
+
 		
 
 	</context>

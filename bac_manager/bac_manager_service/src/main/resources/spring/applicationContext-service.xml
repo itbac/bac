@@ -6,6 +6,7 @@
     <!-- 定义服务名称: 自定义,唯一标识一个服务,以便于进行服务治理 -->
     <dubbo:application name="manager-service"/>
 
+
     <!-- 服务注册地址: multicast : 广播地址 zookeeper: zookeeper注册中心地址 -->
     <dubbo:registry address="zookeeper://192.168.66.88:2181"/>
 
